@@ -1,0 +1,4 @@
+# application-study.yaml (새로 만든 파일)
+app:
+  notification:
+    enabled: true
