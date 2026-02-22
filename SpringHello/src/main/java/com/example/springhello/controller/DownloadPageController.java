@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class DownloadPageController {
 
-    @GetMapping(value = "/download", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/downloada", produces = MediaType.TEXT_HTML_VALUE)
     @ResponseBody
     public String page() {
         return """
