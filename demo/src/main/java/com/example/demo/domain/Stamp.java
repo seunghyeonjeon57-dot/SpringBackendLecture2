@@ -32,4 +32,9 @@ public class Stamp {
   public int getStampCount() {
     return stampCount;
   }
+
+  public void increase(int amount){
+    this.stampCount+=amount;
+
+  }
 }
