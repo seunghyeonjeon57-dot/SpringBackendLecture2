@@ -1,31 +1,35 @@
 package com.example.springcachedemo.controller;
 
+import com.example.springcachedemo.service.CacheMonitoringService;
 import com.example.springcachedemo.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalTime;
 import java.util.Map;
+import java.util.stream.LongStream;
 
 @RestController
 @RequiredArgsConstructor
 public class ProductController {
 
   private final ProductService productService;
+  private final CacheMonitoringService cacheMonitoringService;
 
   @GetMapping("/api/products")
   public Map<String, Object> getProduct(
       @RequestParam Long id
   ) {
 
-    long start = System.currentTimeMillis();
+    long start =
+        System.currentTimeMillis();
 
     String result =
         productService.getProduct(id);
 
-    long end = System.currentTimeMillis();
+    long end =
+        System.currentTimeMillis();
 
     return Map.of(
         "result", result,
@@ -33,51 +37,22 @@ public class ProductController {
     );
   }
 
-  @GetMapping("/api/products/update")
-  public Map<String, Object> updateProduct(
-      @RequestParam Long id,
-      @RequestParam String name
-  ) {
+  @GetMapping("/api/cache/report")
+  public Map<String, Object> cacheReport() {
 
-    String result =
-        productService.updateProduct(
-            id,
-            name
-        );
-
-    return Map.of(
-        "result", result
-    );
+    return cacheMonitoringService
+        .getCacheReport();
   }
 
-  @GetMapping("/api/cache/evict")
-  public Map<String, Object> evictProduct(
-      @RequestParam Long id
-  ) {
+  @GetMapping("/api/cache/pollution-test")
+  public Map<String, Object> pollutionTest() {
 
-    productService.evictProduct(id);
-
-    return Map.of(
-        "deletedKey", id
-    );
-  }
-
-  @GetMapping("/api/cache/evict-all")
-  public Map<String, Object> evictAllProducts() {
-
-    productService.evictAllProducts();
+    LongStream.rangeClosed(1, 20)
+        .forEach(productService::getProduct);
 
     return Map.of(
-        "success", true
-    );
-  }
-
-  private void printLog(String message) {
-
-    System.out.println(
-        "[" + LocalTime.now().withNano(0)
-            + "] [ProductController] "
-            + message
+        "success",
+        true
     );
   }
 }

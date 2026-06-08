@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.codeit'
 version = '0.0.1-SNAPSHOT'
-description = 'SpringCacheDemo'
+description = 'SpringWebSocketDemo'
 
 java {
     toolchain {
@@ -20,16 +20,13 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompileOnly 'org.projectlombok:lombok'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testAnnotationProcessor 'org.projectlombok:lombok'
-    implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-    implementation 'com.github.ben-manes.caffeine:caffeine'
 }
 
 tasks.named('test') {
